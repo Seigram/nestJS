@@ -9,6 +9,7 @@ export class LoggerMiddleware implements NestMiddleware{//implements를 씀으�
     use(request: Request, response: Response, next: NextFunction): void{
         const { ip, method, originalUrl } = request;
         const userAgent = request.get('user-agent') || '';
+        //실행전
 
         response.on('finish', ()=>{
             const { statusCode} = response;
@@ -16,7 +17,7 @@ export class LoggerMiddleware implements NestMiddleware{//implements를 씀으�
             //console.log 가 아닌 this.logger, Logger
             Logger.log(`${method} ${originalUrl} ${statusCode} ${contentLength} - ${userAgent} ${ip}`);
         }); //Router보다 더 먼저 실행됨
-
+        //실행후
         next();
     }
 }
