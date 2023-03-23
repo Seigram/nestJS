@@ -38,8 +38,8 @@ export class UsersController {
 
     @ApiOperation({summary: '회원가입'})
     @Post()
-        postUsers(@Body() body: JoinRequestDto){
-            this.userService.postUsers(body.email, body.nickname, body.password);
+    join(@Body() body: JoinRequestDto){
+            this.userService.join(body.email, body.nickname, body.password);
     }
 
 
