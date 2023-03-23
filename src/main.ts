@@ -1,6 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
+import {HttpExceptionFilter} from "./httpException.filter";
+import {ValidationPipe} from "@nestjs/common";
 declare const module: any;
 
 
@@ -10,7 +12,8 @@ async function bootstrap() {
   const port = process.env.PORT || 3000;
 
   console.log(`Listening on port ${port}`);
-
+  app.useGlobalPipes(new ValidationPipe()); //class validator 적용
+  app.useGlobalFilters(new HttpExceptionFilter()); //ExceptionFIlter 적용
   const config = new DocumentBuilder()
       .setTitle('Cats example')
       .setDescription('')

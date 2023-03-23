@@ -1,10 +1,11 @@
-import {Body, Controller, Get, Post, Req, Res, UseInterceptors} from '@nestjs/common';
+import {Body, Controller, Get, HttpException, Post, Req, Res, UseInterceptors} from '@nestjs/common';
 import {JoinRequestDto} from "./dto/join.request.dto";
 import {UsersService} from "./users.service";
 import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {UserDto} from "../common/dto/user.dto";
 import {User} from "../common/decorators/user.decorator";
 import {UndefinedToNullInterceptor} from "../common/interceptors/undefinedToNull.interceptor";
+import {HttpExceptionFilter} from "../httpException.filter";
 
 
 @UseInterceptors(UndefinedToNullInterceptor)//인터셉터 적용 개별적적용도 가능
@@ -38,8 +39,10 @@ export class UsersController {
 
     @ApiOperation({summary: '회원가입'})
     @Post()
-    join(@Body() body: JoinRequestDto){
-            this.userService.join(body.email, body.nickname, body.password);
+    async join(@Body() body: JoinRequestDto){
+            await this.userService.join(body.email, body.nickname, body.password);
+            //await를 써야 안에 있는 에러가 HttpException Filter로 전송됨
+
     }
 
 
