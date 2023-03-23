@@ -16,3 +16,4 @@ describe('DmsService', () => {
     expect(service).toBeDefined();
   });
 });
+//SQL 바뀌면 Entity도 바꿔야될때나 롤백할때
