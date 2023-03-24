@@ -17,6 +17,7 @@ import {Mentions} from "./entities/Mentions";
 import {Users} from "./entities/Users";
 import {WorkspaceMembers} from "./entities/WorkspaceMembers";
 import {Workspaces} from "./entities/Workspaces";
+import {AuthModule} from "./auth/auth.module";
 
 const getEnv = async () =>{
   //const response = axios.get('/비밀키요청') 이런식으로 외부에서 .env를 불러와서 할 수 있음
@@ -27,7 +28,13 @@ const getEnv = async () =>{
 }
 @Module({
   //isGlobal 하면 모든 곳에서 ConfiggModule 사용 가능
-  imports: [ConfigModule.forRoot({isGlobal: true, load: [getEnv]}), UsersModule, ChannelsModule, DmsModule, WorkspacesModule, TypeOrmModule.forRoot({
+  imports: [ConfigModule.forRoot({isGlobal: true, load: [getEnv]}),
+    AuthModule, //모든모듈은 app모듈에 연결되어야함
+    UsersModule,
+    ChannelsModule,
+    DmsModule,
+    WorkspacesModule,
+    TypeOrmModule.forRoot({
     type: 'mysql',
     host: 'localhost',
     port: 3306,
@@ -49,7 +56,7 @@ const getEnv = async () =>{
     keepConnectionAlive: true, //hot reloading 시 계속 연결
   }), TypeOrmModule.forFeature([Users])], //module 을 개발하고 임포트 시킴
   controllers: [AppController],
-  providers: [AppService, ConfigService, UsersService], //.env도 nest가 관리하게끔 //provider에 연결된 것들을 보고 의존성 주입을 해줌
+  providers: [AppService, ConfigService], //.env도 nest가 관리하게끔 //provider에 연결된 것들을 보고 의존성 주입을 해줌
   exports: [],//다른 모듈에서 쓰고 싶을 때
 /*  providers:[{
     provide: AppService,
