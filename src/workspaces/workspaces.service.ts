@@ -104,5 +104,4 @@ export class WorkspacesService {
             })
             .getOne(); //쿼리빌더가 표현이 그나마 쉽다.
     }
-
 }

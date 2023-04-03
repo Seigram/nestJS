@@ -1,0 +1,4 @@
+로컬에서 npm run build 하고 dist 폴더 git 허브 올려서 다운
+pm2 cross-env 설치
+
+"start:prod": "sudo corss-env NODE_ENV=production PORT=80 pm2 start dist/src/main.js", 리눅스는 sudo 붙여야됨

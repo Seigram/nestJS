@@ -18,7 +18,7 @@ import {EventsModule} from "../events/events.module";
       Workspaces,
       ChannelMembers,
     ]),
-    EventsModule,
+    EventsModule, //eventsModule을 넣어야됨 gateway 넣으면 안됨 넣을때마다 new가 되므로
   ],
   controllers: [ChannelsController],
   providers: [ChannelsService]

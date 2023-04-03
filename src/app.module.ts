@@ -18,6 +18,8 @@ import {Users} from "./entities/Users";
 import {WorkspaceMembers} from "./entities/WorkspaceMembers";
 import {Workspaces} from "./entities/Workspaces";
 import {AuthModule} from "./auth/auth.module";
+import { EventsGateway } from './events/events.gateway';
+import { EventsModule } from './events/events.module';
 
 const getEnv = async () =>{
   //const response = axios.get('/비밀키요청') 이런식으로 외부에서 .env를 불러와서 할 수 있음
@@ -54,9 +56,9 @@ const getEnv = async () =>{
     synchronize: false, //개발환경일떄만, nest->DB로 옴길떄 한번만들고 false로 하는게 낫다.
     logging: true, //어떤 쿼리를 날렸나 본다.
     keepConnectionAlive: true, //hot reloading 시 계속 연결
-  }), TypeOrmModule.forFeature([Users])], //module 을 개발하고 임포트 시킴
+  }), TypeOrmModule.forFeature([Users]), EventsModule], //module 을 개발하고 임포트 시킴
   controllers: [AppController],
-  providers: [AppService, ConfigService], //.env도 nest가 관리하게끔 //provider에 연결된 것들을 보고 의존성 주입을 해줌
+  providers: [AppService, ConfigService, EventsGateway], //.env도 nest가 관리하게끔 //provider에 연결된 것들을 보고 의존성 주입을 해줌
   exports: [],//다른 모듈에서 쓰고 싶을 때
 /*  providers:[{
     provide: AppService,
